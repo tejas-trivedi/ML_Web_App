@@ -15,10 +15,19 @@ def main():
     st.sidebar.title("Binary Classification Web App")
     st.sidebar.markdown("Are your mushrooms edible or poisonous?")
     
+    @st.cache(persist=True)
     def load_data():
-        data = pd.read_csv('project/mushrooms.csv')
+        data = pd.read_csv('C:/Users/TEJAS/Desktop/project/mushrooms.csv')
         label = LabelEncoder()
+        for col in data.columns:
+            data[col] = label.fit_transform(data[col])
+        return data
         
+    df = load_data()
+    
+    if st.sidebar.checkbox("Show raw data", False):
+        st.subheader("Mushroom Data Set (Classification)")
+        st.write(df)
 
 
 
